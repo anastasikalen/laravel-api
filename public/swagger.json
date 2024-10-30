@@ -1,0 +1,719 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Your API Title",
+        "description": "Description of your API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/tokens": {},
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register a new user",
+                "operationId": "8a56853624e025573120a09a4c75d468",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "/schemas/RegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully."
+                    },
+                    "400": {
+                        "description": "Validation error."
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Log in a user",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials."
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Log out the authenticated user",
+                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
+                "responses": {
+                    "200": {
+                        "description": "Logged out successfully."
+                    },
+                    "401": {
+                        "description": "Unauthenticated."
+                    }
+                }
+            }
+        },
+        "/api/routes/{routeId}/places": {
+            "post": {
+                "tags": [
+                    "Places"
+                ],
+                "summary": "Create a new place for a specific route",
+                "operationId": "97675972579a22aa5e7a9fd3705f2a46",
+                "parameters": [
+                    {
+                        "name": "routeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "/schemas/PlaceRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Place created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/schemas/Place"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated."
+                    }
+                }
+            }
+        },
+        "/api/places": {
+            "get": {
+                "tags": [
+                    "Places"
+                ],
+                "summary": "Get a list of places",
+                "operationId": "98b7b5e708ea1544e70cf25ec8621387",
+                "responses": {
+                    "200": {
+                        "description": "List of places.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "/schemas/Place"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/routes/{routeId}/places/{placeId}": {
+            "get": {
+                "tags": [
+                    "Places"
+                ],
+                "summary": "Get a specific place",
+                "operationId": "578ec6753b1d1cbb88e0c1c700a695a9",
+                "parameters": [
+                    {
+                        "name": "routeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "placeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Place retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/schemas/Place"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Place does not belong to this route."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Places"
+                ],
+                "summary": "Update a specific place",
+                "operationId": "8104ad1e06e6d72f94560f09c9a4ed76",
+                "parameters": [
+                    {
+                        "name": "routeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "placeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "/schemas/PlaceRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Place updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/schemas/Place"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "You are not authorized to update this place."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Places"
+                ],
+                "summary": "Delete a specific place",
+                "operationId": "05c9c928c324b25d45861a9f03713b22",
+                "parameters": [
+                    {
+                        "name": "routeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "placeId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Place deleted successfully."
+                    },
+                    "403": {
+                        "description": "You are not authorized to delete this place."
+                    }
+                }
+            }
+        },
+        "/weather/{route}/{place}": {
+            "get": {
+                "tags": [
+                    "Weather"
+                ],
+                "summary": "Get weather data for a specific place",
+                "operationId": "1895d509aae47a9054af313c2aaf604b",
+                "parameters": [
+                    {
+                        "name": "route",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "place",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response with weather data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/schemas/WeatherResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Place does not belong to this route",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Place does not belong to this route"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to fetch weather data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Failed to fetch weather data"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/hotel/{route}/{place}": {
+            "get": {
+                "tags": [
+                    "Hotels"
+                ],
+                "summary": "Get hotel data for a specific place",
+                "operationId": "5dfd092be670b89f99ee33d0c776663c",
+                "parameters": [
+                    {
+                        "name": "route",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "place",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response with hotel data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/schemas/HotelResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Place does not belong to this route",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Place does not belong to this route"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to fetch hotels data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Failed to fetch hotels data"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/routes": {
+            "get": {
+                "tags": [
+                    "Routes"
+                ],
+                "summary": "Get a list of routes",
+                "operationId": "25d3d0d0f5d12b021dc6272e30293e95",
+                "responses": {
+                    "200": {
+                        "description": "List of routes.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Route"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Routes"
+                ],
+                "summary": "Create a new route",
+                "operationId": "b33c4c1179bc9292122b3d06edfeaff1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "/schemas/RouteRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Route created successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/schemas/Route"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated."
+                    }
+                }
+            }
+        },
+        "/api/routes/{id}": {
+            "get": {
+                "tags": [
+                    "Routes"
+                ],
+                "summary": "Get a specific route",
+                "operationId": "e2a8d29a88e0b4b65e46b742ac68f79e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Route retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/schemas/Route"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Route not found."
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Routes"
+                ],
+                "summary": "Update a specific route",
+                "operationId": "deeadf381bc7b3d6471d4c17c0cfe8ac",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "/schemas/RouteRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Route updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "/schemas/Route"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "You are not authorized to update this route."
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Routes"
+                ],
+                "summary": "Delete a specific route",
+                "operationId": "90c67fe2765db8d58d5efc5a24316169",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Route deleted successfully."
+                    },
+                    "403": {
+                        "description": "You are not authorized to delete this route."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HotelResponse": {
+                "type": "array",
+                "items": {
+                    "properties": {
+                        "name": {
+                            "type": "string",
+                            "example": "Hotel Sunshine"
+                        },
+                        "address": {
+                            "type": "string",
+                            "example": "123 Main St, Springfield"
+                        },
+                        "price": {
+                            "type": "string",
+                            "example": "100 USD"
+                        },
+                        "rating": {
+                            "type": "number",
+                            "example": 4.5
+                        },
+                        "reviewWord": {
+                            "type": "string",
+                            "example": "Excellent"
+                        },
+                        "checkin": {
+                            "type": "string",
+                            "example": "14:00"
+                        },
+                        "checkout": {
+                            "type": "string",
+                            "example": "12:00"
+                        },
+                        "photo": {
+                            "type": "string",
+                            "example": "https://example.com/photo.jpg"
+                        },
+                        "coordinates": {
+                            "properties": {
+                                "latitude": {
+                                    "type": "number",
+                                    "example": 40.7128
+                                },
+                                "longitude": {
+                                    "type": "number",
+                                    "example": -74.006
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "badges": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "class": {
+                            "type": "string",
+                            "example": "5 star"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "Route": {
+                "required": [
+                    "id",
+                    "name",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Route 1"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Description of the route"
+                    },
+                    "start_location": {
+                        "type": "string",
+                        "example": "Start Location"
+                    },
+                    "end_location": {
+                        "type": "string",
+                        "example": "End Location"
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01T12:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Places",
+            "description": "Places"
+        },
+        {
+            "name": "Weather",
+            "description": "Weather"
+        },
+        {
+            "name": "Hotels",
+            "description": "Hotels"
+        },
+        {
+            "name": "Routes",
+            "description": "Routes"
+        }
+    ]
+}
